@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% block content %}
+    <!DOCTYPE html>
+    <html>
+    <body>
+    <h2>こんにちは、{{ employee.name }} さん</h2>
+    {% if checked_in %}
+        <p>
+            出勤
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="{{ url_for('check_out', employee_id=employee.id) }}" class="btn btn-check_out" id="checkOutButton">退勤</a>
+        </p>
+        <p>
+            {{checked_in_time.strftime('%Y-%m-%d %H:%M')}}に出勤しました。
+        </p>
+    {% else %}
+        <p>
+            <a href="{{ url_for('check_in', employee_id=employee.id) }}" class="btn btn-check_in" id="checkInButton">出勤</a>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            退勤
+        </p>
+    {% endif %}
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    </body>
+    </html>
+{% endblock %}

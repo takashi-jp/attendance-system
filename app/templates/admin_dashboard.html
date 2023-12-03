@@ -1,0 +1,80 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <style>
+        td {
+            padding: 3px 25px;
+        }
+    </style>
+
+    <h1>管理者ダッシュボード</h1>
+
+    <h2>出退勤記録</h2>
+    <ul>
+    {% for employee in employees %}
+        <h3>{{ employee.name }} さん</h3>
+        <a href="{{ url_for('check_in', employee_id=employee.id) }}"> 出勤</a>
+        <a href="{{ url_for('check_out', employee_id=employee.id) }}"> 退勤</a>
+    {% endfor %}
+    </ul>
+
+    <h2>従業員リスト</h2>
+    <ul>
+    <p>従業員数: {{ employees|length }}</p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Employee ID</th>
+                <th>Name</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for employee in employees %}
+                <tr>
+                    <td>{{ employee.id }}</td>
+                    <td>{{ employee.name }}</td>
+                    <td>{{ employee.email }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <p><a href="{{ url_for('register') }}">新規従業員登録</a></p>
+    </ul>
+
+    <h2>出退勤レポート</h2>
+    <ul>
+    {% for employee in employees %}
+        <h4>{{ employee.name }} さん</h4>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>従業員氏名</th>
+                    <th>出勤時刻</th>
+                    <th>退勤時刻</th>
+                    <th>労働時間</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for record in records %}
+                    {% if record.employee.id == employee.id %}
+                        <tr>
+                            <td>{{ record.employee.name }}</td>
+                            <td>{{ record.check_in_time.strftime('%Y-%m-%d %H:%M') }}</td>
+                            <td>{{ record.check_out_time.strftime('%Y-%m-%d %H:%M') if record.check_out_time else 'N/A' }}</td>
+                            <td>
+                                {% if record.check_out_time %}
+                                    {{ ((record.check_out_time - record.check_in_time).total_seconds() // 3600) }}時間
+                                    {{ ((record.check_out_time - record.check_in_time).total_seconds() % 3600) // 60 }}分
+                                {% else %}
+                                    N/A
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endfor %}
+    </ul>
+{% endblock %}

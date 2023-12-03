@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <h2>Login</h2>
+    <form method="post" action="{{ url_for('login') }}">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+            {{ form.email.label }}
+            {{ form.email(size=32, class_='form-control') }}
+            {% if form.email.errors %}
+                {% for error in form.email.errors %}
+                    <div class="alert alert-danger">{{ error }}</div>
+                {% endfor %}
+            {% endif %}
+        </div>
+        <div class="form-group">
+            {{ form.password.label }}
+            {{ form.password(size=32, class_='form-control') }}
+            {% if form.password.errors %}
+                {% for error in form.password.errors %}
+                    <div class="alert alert-danger">{{ error }}</div>
+                {% endfor %}
+            {% endif %}
+        </div>
+        <div class="form-group">
+            {{ form.submit(class_='btn btn-primary') }}
+        </div>
+    </form>
+
+    <h2>使い方</h2>
+    <p style="line-height: 0.8;">このウェブサイトは、勤怠管理システムのデモです。</p>
+    <p style="line-height: 0.8;">ログインすると、勤務管理システムを利用できます。</p>
+    <p style="line-height: 0.8;">アカウントには管理者アカウントと従業員アカウントに2種類があります。</p>
+    <p style="line-height: 0.8;">管理者アカウントでは、従業員全員の出退勤の記録、出退勤時刻の閲覧およびアカウントの新規発行ができます。</p>
+    <p style="line-height: 0.8;">従業員アカウントでは、自身の出退勤の記録のみが可能です。</p>
+    <p style="line-height: 0.8;">デモを体験するためには以下のアカウントを入力してください。</p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>管理者アカウント: admin@attendance.com</th>
+                <th>パスワード: admin</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th>従業員アカウント: tanaka@attendance.com</th>
+                <th>パスワード: tanaka</th>
+            </tr>
+{% endblock %}
