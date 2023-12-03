@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block content %}
-    <h2>Register</h2>
+    <h2>新規ユーザーの登録</h2>
     <form method="post" action="{{ url_for('register') }}">
         {{ form.hidden_tag() }}
         <div>
