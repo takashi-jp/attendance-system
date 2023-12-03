@@ -6,3 +6,4 @@ flask_wtf==1.2.1
 click==8.1.7
 werkzeug==3.0.1
 datetime==5.3
+gunicorn==21.2.0
