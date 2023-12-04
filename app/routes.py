@@ -25,7 +25,7 @@ def admin():
     if not current_user.is_admin:
         abort(403)
     employees = Employee.query.all()
-    records = AttendanceRecord.query.all() 
+    records = AttendanceRecord.query.all()
     return render_template('admin_dashboard.html', employees=employees, records=records)
 
 @app.route('/employee')
